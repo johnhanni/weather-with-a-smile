@@ -6,11 +6,33 @@ form.addEventListener("submit", (event) => {
     console.log("Form submit fired successfully!")
     event.preventDefault();
     const location = document.getElementById("location-input").value;
-    if (location) {fetchWeather(location);
+    if (location) {
+        fetchWeather(location);
     } else {
         displayError("Location field is empty.  Please type a city into the box.");
     }
 });
+
+// Practice code for displaying array data using DOM manipulation and for loop
+
+const sampleArrayDisplay = [
+    "First slide",
+    "Second slide",
+    "Third slide",
+    "Fourth slide"
+];
+
+let index = 0;
+
+// This function cycles through the array data using a modulo operator to restart when at the last data point
+function arraySlideshow(arr) {
+    const arrayDataDisplay = document.getElementById("slideshowContent");
+    arrayDataDisplay.textContent = arr[index];
+    index = (index + 1) % arr.length;
+}
+
+
+// End practice code
 
 function fetchWeather(location) {
     const apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${API_KEY}&units=imperial`;
@@ -25,6 +47,10 @@ function fetchWeather(location) {
         .then(data => {
             displayWeather(data);
             console.log(data);
+        arraySlideshow(data); // call function for practice code challenge
+        setInterval(() => {
+            arraySlideshow(data);
+        }, 3000) // 
         })
         .catch(error => displayError(error.message));
 
